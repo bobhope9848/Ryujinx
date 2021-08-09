@@ -829,7 +829,7 @@ namespace Ryujinx.Ui.Windows
             
             return assigner;
         }
-
+        //Event start for control assigning
         private void HandleButtonPressed(ToggleButton button, bool forStick)
         {
             if (_isWaitingForInput)
@@ -861,6 +861,7 @@ namespace Ryujinx.Ui.Windows
 
                     if (_mousePressed || keyboard.IsPressed(Ryujinx.Input.Key.Escape) || assigner.HasAnyButtonPressed() || assigner.ShouldCancel())
                     {
+
                         break;
                     }
                 }
@@ -881,6 +882,7 @@ namespace Ryujinx.Ui.Windows
                     _middleMousePressed = false;
 
                     ButtonPressEvent -= MouseClick;
+                    //Doesn't do anything currently
                     keyboard.Dispose();
 
                     button.Active = false;
