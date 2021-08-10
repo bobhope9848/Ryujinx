@@ -60,6 +60,10 @@ namespace Ryujinx.Graphics.OpenGL
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
+            //Get max texture size for gpu
+            int[] maxTextureSize = new int[1];
+            GL.GetInteger(GetPName.MaxTextureSize, maxTextureSize);
+
             int srcX0, srcX1, srcY0, srcY1;
             float scale = view.ScaleFactor;
 
@@ -89,8 +93,8 @@ namespace Ryujinx.Graphics.OpenGL
             {
                 srcX0 = (int)(srcX0 * scale);
                 srcY0 = (int)(srcY0 * scale);
-                srcX1 = (int)Math.Ceiling(srcX1 * scale);
-                srcY1 = (int)Math.Ceiling(srcY1 * scale);
+                srcX1 = (int)Math.Min(Math.Ceiling(srcX1 * scale), maxTextureSize[0]);
+                srcY1 = (int)Math.Min(Math.Ceiling(srcY1 * scale), maxTextureSize[0]);
             }
 
             float ratioX = crop.IsStretched ? 1.0f : MathF.Min(1.0f, _height * crop.AspectRatioX / (_width  * crop.AspectRatioY));
