@@ -88,13 +88,14 @@ namespace Ryujinx.Graphics.OpenGL
                 srcY0 = crop.Top;
                 srcY1 = crop.Bottom;
             }
-
+            float safescale = maxTextureSize[0] / srcX1;
             if (scale != 1f)
             {
+                
                 srcX0 = (int)(srcX0 * scale);
                 srcY0 = (int)(srcY0 * scale);
-                srcX1 = (int)Math.Min(Math.Ceiling(srcX1 * scale), maxTextureSize[0]);
-                srcY1 = (int)Math.Min(Math.Ceiling(srcY1 * scale), maxTextureSize[0]);
+                srcX1 = (int)Math.Min(Math.Ceiling(srcX1 * scale), Math.Ceiling(srcX1 * safescale));
+                srcY1 = (int)Math.Min(Math.Ceiling(srcY1 * scale), Math.Ceiling(srcY1 * safescale));
             }
 
             float ratioX = crop.IsStretched ? 1.0f : MathF.Min(1.0f, _height * crop.AspectRatioX / (_width  * crop.AspectRatioY));
